@@ -1,83 +1,68 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EShop.Application;
+using EShop.Domain;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+//using System.Web.Http;
+
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EShopService.Controllers
 {
-    public class CreditCardController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CreditCardController : ControllerBase
     {
-        // GET: CreditCardController
-        public ActionResult Index()
+        private ICreditCardService _ccs;
+        public CreditCardController(ICreditCardService ccs)
         {
-            return View();
+            _ccs = ccs;
         }
-
-        // GET: CreditCardController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: CreditCardController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CreditCardController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        // GET api/<CreditCardController>/5
+        [HttpGet()]
+        public IActionResult Get(string cardNumber)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _ccs.ValidateCard(cardNumber);
+                return Ok(new { message = _ccs.GetCardType(cardNumber)});
             }
-            catch
+            catch (CardNumberTooLongException ex)
             {
-                return View();
+                return StatusCode((int)HttpStatusCode.RequestUriTooLong, new { ex.Message });
+            }
+            catch (CardNumberTooShortException ex)
+            {
+                return BadRequest(new { error = ex.Message, code = HttpStatusCode.BadRequest });
+            }
+            catch (CardNumberInvalidException ex)
+            {
+                string msg = ex.Message;
+                if (msg == "The provided card number does not match any of the registered card types.")
+                {
+                    return StatusCode((int)HttpStatusCode.NotAcceptable, new { msg });
+                }
+                return BadRequest(new { error = msg, code = HttpStatusCode.BadRequest });
             }
         }
 
-        // GET: CreditCardController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: CreditCardController/Edit/5
+        // POST api/<CreditCardController>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public void Post([FromBody]string value)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
 
-        // GET: CreditCardController/Delete/5
-        public ActionResult Delete(int id)
+        // PUT api/<CreditCardController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
         {
-            return View();
         }
 
-        // POST: CreditCardController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        // DELETE api/<CreditCardController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

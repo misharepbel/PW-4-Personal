@@ -3,7 +3,7 @@
 namespace EShop.Application;
 using EShop.Domain;
 
-public class CreditCardService
+public class CreditCardService : ICreditCardService
 {
     public bool ValidateCard(string cardNumber)
     {
@@ -62,7 +62,7 @@ public class CreditCardService
         if (Regex.IsMatch(cardNumber, @"^3[47]\d{13}$"))
             return CreditCardProvider.AmericanExpress;
 
-        if (Regex.IsMatch(cardNumber, @"^(6011\d{12}|65\d{14}|64[4-9]\d{13}|622(1[2-9][6-9]|[2-8]\d{2}|9([01]\d|2[0-5]))\d{10})$"))
+        /*if (Regex.IsMatch(cardNumber, @"^(6011\d{12}|65\d{14}|64[4-9]\d{13}|622(1[2-9][6-9]|[2-8]\d{2}|9([01]\d|2[0-5]))\d{10})$"))
             return CreditCardProvider.Discover;
 
         if (Regex.IsMatch(cardNumber, @"^(352[89]|35[3-8]\d)\d{12}$"))
@@ -72,7 +72,7 @@ public class CreditCardService
             return CreditCardProvider.DinersClub;
 
         if (Regex.IsMatch(cardNumber, @"^(50|5[6-9]|6\d)\d{10,17}$"))
-            return CreditCardProvider.Maestro;
+            return CreditCardProvider.Maestro;*/
 
         throw new CardNumberInvalidException(message:"The provided card number does not match any of the registered card types.");
         //return default;
