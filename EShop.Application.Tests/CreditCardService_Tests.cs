@@ -1,6 +1,7 @@
 ﻿namespace EShop.Application.Tests;
 using EShop.Application;
-using EShop.Domain;
+using EShop.Domain.Enums;
+using EShop.Domain.Exceptions;
 
 public class CreditCardService_Tests
 {

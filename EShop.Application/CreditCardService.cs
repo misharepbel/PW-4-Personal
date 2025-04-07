@@ -1,7 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace EShop.Application;
-using EShop.Domain;
+using EShop.Domain.Exceptions;
+using EShop.Domain.Enums;
 
 public class CreditCardService : ICreditCardService
 {

@@ -1,4 +1,4 @@
-﻿using EShop.Domain;
+﻿using EShop.Domain.Enums;
 
 namespace EShop.Application;
 
