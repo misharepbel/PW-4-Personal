@@ -1,4 +1,4 @@
-﻿namespace EShop.Domain;
+﻿namespace EShop.Domain.Exceptions;
 
 public class CardNumberTooShortException : Exception
 {

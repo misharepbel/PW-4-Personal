@@ -1,5 +1,5 @@
 ﻿using EShop.Application;
-using EShop.Domain;
+using EShop.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 //using System.Web.Http;
