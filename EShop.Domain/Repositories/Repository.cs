@@ -2,16 +2,6 @@
 
 namespace EShop.Domain.Repositories;
 
-// Interfejs repozytorium
-public interface IRepository
-{
-    IEnumerable<Product> GetAll();
-    Product GetById(int id);
-    void Add(Product product);
-    void Update(Product product);
-    void Delete(int id);
-}
-
 // Implementacja repozytorium
 public class Repository : IRepository
 {
@@ -43,9 +33,9 @@ public class Repository : IRepository
         return _context.Products.Where(x => x.Id == id).FirstOrDefault()!;
     }
 
-    public void Update(Product product)
+    public void Update(int id, Product product)
     {
-        Product changedProduct = GetById(product.Id);
+        Product changedProduct = GetById(id);
         changedProduct.Name = product.Name;
         changedProduct.Ean = product.Ean;
         changedProduct.Price = product.Price;

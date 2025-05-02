@@ -5,9 +5,8 @@ namespace EShop.Application;
 
 public interface IProductService
 {
-    public void Add(Repository repository, Product product);
-    public void Update(Repository repository, Product product);
-    public void Delete(Repository repository, int id);
-    public Product GetById(int id);
-    public IEnumerable<Product> GetAll(Repository repository);
+    void Add(Product product);
+    void Update(int id, Product product);
+    Product GetById(int id);
+    IEnumerable<Product> GetAll();
 }

@@ -5,22 +5,23 @@ namespace EShop.Application;
 
 public class ProductService : IProductService
 {
-    public void Add(Repository repository, Product product) => repository.Add(product);
-
-    public void Delete(Repository repository, int id)
+    private IRepository _repo;
+    public ProductService(IRepository repo)
     {
-        repository.Delete(id);
+        _repo = repo;
     }
 
-    public IEnumerable<Product> GetAll(Repository repository) => repository.GetAll();
+    public void Add(Product product) => _repo.Add(product);
 
-    public Product GetById(Repository repository, int id)
+    public IEnumerable<Product> GetAll() => _repo.GetAll();
+
+    public Product GetById(int id)
     {
-        return repository.GetById(id);
+        return _repo.GetById(id);
     }
 
-    public void Update(Repository repository, Product product)
+    public void Update(int id, Product product)
     {
-        repository.Update(product);
+        _repo.Update(id, product);
     }
 }

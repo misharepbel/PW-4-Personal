@@ -9,5 +9,4 @@ public class Product : BaseModel
     public int Stock { get; set; }
     public string SKU { get; set; } = default!;
     public Category Category { get; set; } = default!;
-    
 }
