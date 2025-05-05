@@ -11,17 +11,23 @@ public class ProductService : IProductService
         _repo = repo;
     }
 
-    public void Add(Product product) => _repo.Add(product);
-
-    public IEnumerable<Product> GetAll() => _repo.GetAll();
-
-    public Product GetById(int id)
+    public async Task<Product> AddAsync(Product product)
     {
-        return _repo.GetById(id);
+        return await _repo.AddAsync(product);
     }
 
-    public void Update(int id, Product product)
+    public async Task<IEnumerable<Product>> GetAllAsync()
     {
-        _repo.Update(id, product);
+        return await _repo.GetAllAsync();
+    }
+
+    public async Task<Product> GetByIdAsync(int id)
+    {
+        return await _repo.GetByIdAsync(id);
+    }
+
+    public async Task<Product> UpdateAsync(Product product)
+    {
+        return await _repo.UpdateAsync(product);
     }
 }

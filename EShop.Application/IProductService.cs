@@ -5,8 +5,8 @@ namespace EShop.Application;
 
 public interface IProductService
 {
-    void Add(Product product);
-    void Update(int id, Product product);
-    Product GetById(int id);
-    IEnumerable<Product> GetAll();
+    Task<IEnumerable<Product>> GetAllAsync();
+    Task<Product> GetByIdAsync(int id);
+    Task<Product> AddAsync(Product product);
+    Task<Product> UpdateAsync(Product product);
 }

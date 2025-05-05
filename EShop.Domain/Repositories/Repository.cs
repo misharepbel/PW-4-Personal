@@ -1,4 +1,5 @@
 ﻿using EShop.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EShop.Domain.Repositories;
 
@@ -6,43 +7,29 @@ namespace EShop.Domain.Repositories;
 public class Repository : IRepository
 {
     private readonly DataContext _context;
+    public Repository(DataContext context) => _context = context;
 
-    public Repository(DataContext context)
-    {
-        _context = context;
-    }
-
-    public void Add(Product product)
+    public async Task<Product> AddAsync(Product product)
     {
         _context.Products.Add(product);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+        return product;
     }
 
-    public void Delete(int id)
+    public async Task <IEnumerable<Product>> GetAllAsync()
     {
-        var toDelete = GetById(id);
-        toDelete.Deleted = true;
-        _context.Products.Remove(toDelete);
-        _context.SaveChanges();
+        return await _context.Products.ToListAsync();
     }
 
-    public IEnumerable<Product> GetAll() => _context.Products.ToList();
-
-    public Product GetById(int id)
+    public async Task<Product> GetByIdAsync(int id)
     {
-        return _context.Products.Where(x => x.Id == id).FirstOrDefault()!;
+        return await _context.Products.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public void Update(int id, Product product)
+    public async Task<Product> UpdateAsync(Product product)
     {
-        Product changedProduct = GetById(id);
-        changedProduct.Name = product.Name;
-        changedProduct.Ean = product.Ean;
-        changedProduct.Price = product.Price;
-        changedProduct.Stock = product.Stock;
-        changedProduct.SKU = product.SKU;
-        changedProduct.Category = product.Category;
-        changedProduct.Updated_at = DateTime.Now;
-        _context.SaveChanges();
+        _context.Products.Update(product);
+        await _context.SaveChangesAsync();
+        return product;
     }
 }

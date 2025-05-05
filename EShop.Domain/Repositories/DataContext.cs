@@ -7,7 +7,7 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
 {
     public DbSet<Product> Products { get; set; }
 
-    /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    /*protected override Task<Product> OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // Połączenie z bazą danych
         optionsBuilder.UseSqlServer("Server=.;Database=MyDatabase;Trusted_Connection=True;");
